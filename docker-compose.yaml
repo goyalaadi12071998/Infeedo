@@ -1,0 +1,18 @@
+version: '3'
+services: 
+  redis:
+    image: redis:latest
+    network_mode: host
+    ports:
+      - "6379:6379"
+  mongo-server:
+    image: mongo
+  node-server:
+    build: .
+    restart: on-failure
+    ports: 
+      - 3000:3000
+    environment:
+      - APP_MODE=docker
+      - PORT=3000
+      - MONGO_URL=
