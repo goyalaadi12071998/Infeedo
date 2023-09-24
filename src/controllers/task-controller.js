@@ -46,7 +46,14 @@ const GetAllTasks = async (req, res) => {
 }
 
 const GetTaskMetrics = async (req, res) => {
-    const params = req.params
+    try {
+        const payload = await taskservice.GetTaskMetrics()
+        Respond(req, res, payload, null)
+        return
+    } catch (err) {
+        Respond(req, res, null, err)
+        return
+    }
 }
 
 module.exports = {

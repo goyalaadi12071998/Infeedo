@@ -1,8 +1,9 @@
 const taskCore = require('./core')
+const constants = require('../constants')
 
 const CreateTask = async (data) => {
     if (!data.status) {
-        data.status = "open"
+        data.status = constants.StatusOpen
     }
 
     const response = taskCore.CreateTask(data)
@@ -20,4 +21,9 @@ const GetAllTasks = async (page) => {
     return response
 }
 
-module.exports = {CreateTask, UpdateTask, GetAllTasks}
+const GetTaskMetrics = async () => {
+    const response = await taskCore.GetTaskMetrics()
+    return response
+}
+
+module.exports = {CreateTask, UpdateTask, GetAllTasks, GetTaskMetrics}

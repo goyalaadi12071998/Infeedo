@@ -1,5 +1,8 @@
 const models = require('../models/index')
 const errors = require('../error')
+const { getDb } = require('../providers/mysql/sequelize')
+
+const sequelize = getDb()
 
 const CreateTask = async (data) => {
     try {
@@ -60,4 +63,20 @@ const GetAllTasks = async (page) => {
     }
 }
 
-module.exports = {CreateTask, UpdateTask, GetTaskById, GetAllTasks}
+const GetTaskMetrics = async () => {
+    try {
+        const response = await models.Task.findAll({attributes: [
+            'status',
+            [sequelize.fn('COUNT', sequelize.col('status')), 'status_count'],
+          ],
+          group: ['status']}
+        )
+
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new errors.BadRequestError("Error in fetching data in db")
+    }
+}
+
+module.exports = {CreateTask, UpdateTask, GetTaskById, GetAllTasks, GetTaskMetrics}
