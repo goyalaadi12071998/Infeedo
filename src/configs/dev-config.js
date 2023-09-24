@@ -1,11 +1,10 @@
 const configs = {
-    core: {
-        Name: "bolster",
-        Host: "localhost",
-        Port: process.env.PORT || 3000
-    },
     db: {
-        MongoUrl: process.env.MONGO_URL 
+        name: "infeedo_tasks",
+        username: "root",
+        password: "password",
+        host: "localhost",
+        dialect: "mysql"
     }
 }
 

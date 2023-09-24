@@ -17,4 +17,4 @@ const getEnv = () => {
     return env
 }
 
-module.exports = getEnv
+module.exports = {getEnv}

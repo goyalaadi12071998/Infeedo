@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
 
-const db = new sequelize.Sequelize(
+let db = new sequelize.Sequelize(
     'infeedo_tasks',
     'root',
     'password',
@@ -10,10 +10,12 @@ const db = new sequelize.Sequelize(
     }
 );
 
+
 const connectDb = async () => {
     try {
         await db.authenticate()
         await db.sync()
+        dbclient = db
     } catch (err) {
         throw err
     }

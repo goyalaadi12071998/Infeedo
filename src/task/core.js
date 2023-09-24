@@ -3,10 +3,12 @@ const errors = require('../error')
 
 const CreateTask = async (data) => {
     try {
-        await models.Task.create({
+        const response = await models.Task.create({
             title: data.title,
             status: data.status
         })
+
+        return response
     } catch (err) {
         throw new errors.BadRequestError("Error in creating task entry in db")
     }

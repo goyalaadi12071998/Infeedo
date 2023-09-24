@@ -8,8 +8,8 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
-const mongoSanitize = require('express-mongo-sanitize');
 const bodyParser = require('body-parser');
+const {getConfigs} = require('./configs')
 
 const {connectDb} = require('./providers/mysql/sequelize')
 const redisClient = require('./providers/redis/index')
@@ -22,15 +22,15 @@ app.use(helmet())
 app.use(xss())
 app.use(cors())
 app.use(morgan())
-app.use(mongoSanitize())
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use('/api/v1', v1routes)
 app.use(NotFoundHandler)
 
 const start = async () => {
+    const configs = getConfigs()
     try {
-        await connectDb()
+        await connectDb(configs)
         await redisClient.connectRedis()
         var server = app.listen(process.env.PORT, () => {console.log("Server is listening on port: ", process.env.PORT)})
 

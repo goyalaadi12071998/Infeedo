@@ -1,13 +1,19 @@
 const devConfigs = require('./dev-config')
 const dockerConfigs = require('./docker-config')
 
+var cfg = {}
+
 const availableConfigs = {
     dev: devConfigs,
     stage: dockerConfigs,
 }
 
-const getConfigs = (env) => {
-    return availableConfigs[env]
+const initConfigs = (env) => {
+    cfg = availableConfigs[env]
 }
 
-module.exports = getConfigs
+const getConfigs = () => {
+    return cfg
+}
+
+module.exports = {getConfigs, initConfigs}

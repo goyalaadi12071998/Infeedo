@@ -33,7 +33,7 @@ const UpdateTask = async (req, res) => {
 }
 
 const GetAllTasks = async (req, res) => {
-    const page = req.body.page - 1
+    const page = req.params.page - 1
 
     try {
         const paylaod = await taskservice.GetAllTasks(page)
