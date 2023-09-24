@@ -1,12 +1,12 @@
 const sequelize = require("sequelize");
 
 let db = new sequelize.Sequelize(
-    'infeedo_tasks',
-    'root',
-    'password',
+    process.env.MYSQL_DATABASE,
+    process.env.MYSQL_USER,
+    process.env.MYSQL_PASSWORD,
     {
-        host: 'localhost',
-        dialect: 'mysql'
+        host: process.env.MYSQL_HOST,
+        dialect: process.env.MYSQL_DIALECT
     }
 );
 

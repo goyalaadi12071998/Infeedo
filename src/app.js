@@ -9,7 +9,6 @@ const xss = require('xss-clean');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
-const {getConfigs} = require('./configs')
 
 const {connectDb} = require('./providers/mysql/sequelize')
 const redisClient = require('./providers/redis/index')
@@ -28,11 +27,11 @@ app.use('/api/v1', v1routes)
 app.use(NotFoundHandler)
 
 const start = async () => {
-    const configs = getConfigs()
     try {
-        await connectDb(configs)
+        await connectDb()
         await redisClient.connectRedis()
-        var server = app.listen(process.env.PORT, () => {console.log("Server is listening on port: ", process.env.PORT)})
+        let port = process.env.PORT || 3000
+        var server = app.listen(port, () => {console.log("Server is listening on port: ", port)})
 
         process.on("SIGTERM", () => {
             server.close(() => { console.log("Closing Server") })
